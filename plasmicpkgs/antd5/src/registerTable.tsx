@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import type { TableRowSelection } from "antd/es/table/interface";
+import type { TableProps } from "antd";
 import React from "react";
 import { asArray, Registerable, registerComponentHelper } from "./utils";
 
@@ -11,17 +12,20 @@ export interface TableRef {
   clearSelection: () => void;
 }
 
+interface AntdTableProps extends TableProps<any> {
+  data: any;
+  rowKey?: string;
+  isSelectable?: undefined | "single" | "multiple";
+  selectedRowKeys?: string[];
+  defaultSelectedRowKeys?: string[];
+  onSelectedRowKeysChange?: (keys: string[]) => void;
+  onSelectedRowsChange?: (rows: any[]) => void;
+  setControlContextData?: (ctx: any) => void;
+}
+
 export const AntdTable = React.forwardRef(function AntdTable(
-  props: React.ComponentProps<typeof Table> & {
-    data: any;
-    rowKey?: string;
-    isSelectable?: undefined | "single" | "multiple";
-    selectedRowKeys?: string[];
-    defaultSelectedRowKeys?: string[];
-    onSelectedRowKeysChange?: (keys: string[]) => void;
-    onSelectedRowsChange?: (rows: any[]) => void;
-    setControlContextData?: (ctx: any) => void;
-  },
+  export const AntdTable = React.forwardRef(function AntdTable(
+  props: AntdTableProps,
   ref: React.Ref<TableRef>
 ) {
   const {
